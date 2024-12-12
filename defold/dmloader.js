@@ -33,7 +33,7 @@ var CUSTOM_PARAMETERS = {
     archive_location_filter: function( path ) {
         return ("archive" + path + "");
     },
-    engine_arguments: ["--verify-graphics-calls=false",],
+    engine_arguments: ["--verify-graphics-calls=false","--verify-graphics-calls=false",],
     custom_heap_size: 268435456,
     full_screen_container: "#canvas-container",
     disable_context_menu: true,
@@ -70,20 +70,34 @@ var CUSTOM_PARAMETERS = {
         prevInnerWidth = innerWidth;
         prevInnerHeight = innerHeight;
         var width = 640;
-        var height = 1136;
+        var height = 960;
         var targetRatio = width / height;
         var actualRatio = innerWidth / innerHeight;
     
+        //Downscale fit
+        if (innerWidth < width || innerHeight < height) {
+            if (actualRatio > targetRatio) {
+                width = innerHeight * targetRatio;
+                height = innerHeight;
+                app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
+                app_container.style.marginTop = "0px";
+            }
+            else {
+                width = innerWidth;
+                height = innerWidth / targetRatio;
+                app_container.style.marginLeft = "0px";
+                app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
+            }
+        }
+        else {
+            app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
+            app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
+        }
     
-        //Stretch
-        width = innerWidth;
-        height = innerHeight;
     
     
     
         var dpi = 1;
-    
-        dpi = window.devicePixelRatio || 1;
     
         app_container.style.width = width + "px";
         app_container.style.height = height + buttonHeight + "px";
@@ -195,8 +209,8 @@ var FileLoader = {
 
 
 var EngineLoader = {
-    wasm_size: 2400982,
-    wasmjs_size: 263732,
+    wasm_size: 2875032,
+    wasmjs_size: 263724,
     asmjs_size: 4000000,
     wasm_instantiate_progress: 0,
 
@@ -1007,7 +1021,7 @@ Module["locateFile"] = function(path, scriptDirectory)
     // dmengine*.wasm is hardcoded in the built JS loader for WASM,
     // we need to replace it here with the correct project name.
     if (path == "dmengine.wasm" || path == "dmengine_release.wasm" || path == "dmengine_headless.wasm") {
-        path = "MobileTest.wasm";
+        path = "MagicLink.wasm";
     }
     return scriptDirectory + path;
 };
