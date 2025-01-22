@@ -1,3 +1,0 @@
-tile_set: "/def-magic-link/sprites.atlas"
-default_animation: "marked"
-blend_mode: BLEND_MODE_ADD
