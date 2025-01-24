@@ -1,1 +1,0 @@
-self.onmessage=function(e){var a=e.data,n=0;if(a.begin){var r=performance.now();clearInterval(n),n=setInterval((function(){var e=performance.now();self.postMessage({elapsedMS:e-r}),r=e}),a.begin.delta)}a.stop&&clearInterval(n)};
